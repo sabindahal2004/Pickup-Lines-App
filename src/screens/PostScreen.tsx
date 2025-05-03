@@ -1,16 +1,19 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import PostList from '../components/PostList';
 
-const PostScreen = ({navigation}:{navigation:any}) => {
+const PostScreen = ({navigation}: {navigation: any}) => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.Container}>
       <PostList navigation={navigation} />
     </SafeAreaView>
   );
 };
 
 export default PostScreen;
-
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  Container: {
+    flex: 1,
+  },
+});

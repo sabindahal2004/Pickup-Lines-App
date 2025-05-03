@@ -1,34 +1,34 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {BORDERRADIUS, FONTSIZE, SPACING} from '../theme/theme';
+import {BORDERRADIUS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const PostCardFooter = () => {
   return (
     <View style={styles.PostCardFooterContainer}>
-      <View>
-        <TouchableOpacity style={styles.FooterIconContainer}>
+      <View style={styles.FooterIconContainer}>
+        <TouchableOpacity>
           <Icon name="heart-outline" size={FONTSIZE.size_20} />
-          <Text style={styles.FooterLabel}>Like</Text>
         </TouchableOpacity>
+        <Text style={styles.FooterLabel}>Like</Text>
       </View>
-      <View>
-        <TouchableOpacity style={styles.FooterIconContainer}>
+      <View style={styles.FooterIconContainer}>
+        <TouchableOpacity>
           <Icon name="save-outline" size={FONTSIZE.size_20} />
-          <Text style={styles.FooterLabel}>Save</Text>
         </TouchableOpacity>
+        <Text style={styles.FooterLabel}>Save</Text>
       </View>
-      <View>
-        <TouchableOpacity style={styles.FooterIconContainer}>
+      <View style={styles.FooterIconContainer}>
+        <TouchableOpacity>
           <Icon name="copy-outline" size={FONTSIZE.size_20} />
-          <Text style={styles.FooterLabel}>Copy</Text>
         </TouchableOpacity>
+        <Text style={styles.FooterLabel}>Copy</Text>
       </View>
-      <View>
-        <TouchableOpacity style={styles.FooterIconContainer}>
+      <View style={styles.FooterIconContainer}>
+        <TouchableOpacity>
           <Icon name="share-outline" size={FONTSIZE.size_20} />
-          <Text style={styles.FooterLabel}>Share</Text>
         </TouchableOpacity>
+        <Text style={styles.FooterLabel}>Share</Text>
       </View>
     </View>
   );
@@ -53,5 +53,6 @@ const styles = StyleSheet.create({
   },
   FooterLabel: {
     color: '#000',
+    fontFamily:FONTFAMILY.poppins_medium,
   },
 });
