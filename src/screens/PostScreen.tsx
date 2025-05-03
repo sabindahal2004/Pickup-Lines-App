@@ -1,11 +1,13 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import PostList from '../components/PostList';
 
-const PostScreen = () => {
+const PostScreen = ({navigation}:{navigation:any}) => {
   return (
-    <View>
-      <Text>PostScreen</Text>
-    </View>
+    <SafeAreaView>
+      <PostList navigation={navigation} />
+    </SafeAreaView>
   );
 };
 

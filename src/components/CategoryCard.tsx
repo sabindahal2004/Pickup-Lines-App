@@ -1,6 +1,6 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View, Pressable } from 'react-native';
+import {Image, StyleSheet, Text, View, Pressable} from 'react-native';
 import React from 'react';
-import { BORDERRADIUS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
+import {BORDERRADIUS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 
 interface CategoryItem {
   name: string;
@@ -19,7 +19,7 @@ const CategoryCard = ({
     <View>
       <Pressable
         onPress={() => navigation.navigate('Posts')}
-        style={[styles.CategoryCard, { backgroundColor: item.color }]}>
+        style={[styles.CategoryCard, {backgroundColor: item.color}]}>
         <Text style={styles.CategoryTitle}>{item.name}</Text>
         <View style={styles.CategoryIconContainer}>
           <Image source={item.iconLink} style={styles.CategoryIcon} />

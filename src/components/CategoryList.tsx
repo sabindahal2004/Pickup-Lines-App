@@ -1,14 +1,14 @@
-import { FlatList, StyleSheet } from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import React from 'react';
 import CategoriesData from '../data/CategoriesData';
 import CategoryCard from './CategoryCard';
-import { BORDERRADIUS, SPACING } from '../theme/theme';
+import {SPACING} from '../theme/theme';
 
-const CategoryList = ({ navigation }: { navigation: any }) => {
+const CategoryList = ({navigation}: {navigation: any}) => {
   return (
     <FlatList
       data={CategoriesData}
-      renderItem={({ item }) => (
+      renderItem={({item}) => (
         <CategoryCard item={item} navigation={navigation} />
       )}
       keyExtractor={item => item.name}
@@ -22,7 +22,7 @@ export default CategoryList;
 
 const styles = StyleSheet.create({
   CategoryListContainer: {
-    gap: BORDERRADIUS.radius_10,
+    gap: SPACING.space_10,
     padding: SPACING.space_10,
   },
 });
