@@ -1,8 +1,10 @@
-import {FlatList, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React from 'react';
 import CategoriesData from '../data/CategoriesData';
 import CategoryCard from './CategoryCard';
 import {SPACING} from '../theme/theme';
+
+const ItemSeparator = () => <View style={{height: SPACING.space_10}} />;
 
 const CategoryList = ({navigation}: {navigation: any}) => {
   return (
@@ -12,7 +14,8 @@ const CategoryList = ({navigation}: {navigation: any}) => {
         <CategoryCard item={item} navigation={navigation} />
       )}
       keyExtractor={item => item.name}
-      contentContainerStyle={styles.CategoryListContainer}
+      contentContainerStyle={[styles.CategoryListContainer]}
+      ItemSeparatorComponent={ItemSeparator}
       showsVerticalScrollIndicator={false}
     />
   );
@@ -22,7 +25,7 @@ export default CategoryList;
 
 const styles = StyleSheet.create({
   CategoryListContainer: {
-    gap: SPACING.space_10,
-    padding: SPACING.space_10,
+    paddingTop: SPACING.space_10,
+    paddingHorizontal: SPACING.space_10,
   },
 });

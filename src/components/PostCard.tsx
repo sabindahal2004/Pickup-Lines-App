@@ -11,10 +11,8 @@ interface PostCardProps {
 
 const PostCard = ({
   item,
-  navigation,
 }: {
   item: PostCardProps;
-  navigation: any;
 }) => {
   return (
     <View style={styles.PostContainer}>

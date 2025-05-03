@@ -6,25 +6,30 @@ import {SPACING} from '../theme/theme';
 import {Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const PostList = ({navigation}: {navigation: any}) => {
+const PostList = ({
+  navigation,
+  category,
+}: {
+  navigation: any;
+  category: string;
+}) => {
   const handleBack = () => {
     navigation.goBack();
   };
+  const filteredPosts = PostsData.filter(post => post.category.toLowerCase() === category.toLowerCase());
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleBack} style={styles.backButton}>
           <Icon name="chevron-back-outline" size={24} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.title}>Posts</Text>
+        <Text style={styles.title}>{category}</Text>
       </View>
 
       {/* Post List */}
       <FlatList
-        data={PostsData}
-        renderItem={({item}) => (
-          <PostCard item={item} navigation={navigation} />
-        )}
+        data={filteredPosts}
+        renderItem={({item}) => <PostCard item={item} />}
         keyExtractor={item => item.id.toString()}
         contentContainerStyle={styles.PostListContainer}
         showsVerticalScrollIndicator={false}
@@ -45,7 +50,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: SPACING.space_10,
     paddingHorizontal: SPACING.space_10,
-    gap:SPACING.space_12,
+    gap: SPACING.space_12,
   },
   backButton: {
     paddingRight: 10,

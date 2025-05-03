@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, StatusBar} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -11,10 +11,13 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <SafeAreaProvider>
+      <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Categories" screenOptions={{
-          headerShown:false,
-        }}>
+        <Stack.Navigator
+          initialRouteName="Categories"
+          screenOptions={{
+            headerShown: false,
+          }}>
           <Stack.Screen
             name="Categories"
             component={CategoryScreen}

@@ -16,16 +16,14 @@ const CategoryCard = ({
   navigation: any;
 }) => {
   return (
-    <View>
       <Pressable
-        onPress={() => navigation.navigate('Posts')}
+        onPress={() => navigation.navigate('Posts',{category:item.name})}
         style={[styles.CategoryCard, {backgroundColor: item.color}]}>
         <Text style={styles.CategoryTitle}>{item.name}</Text>
         <View style={styles.CategoryIconContainer}>
           <Image source={item.iconLink} style={styles.CategoryIcon} />
         </View>
       </Pressable>
-    </View>
   );
 };
 
