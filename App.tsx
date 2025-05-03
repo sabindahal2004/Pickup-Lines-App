@@ -5,6 +5,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import PostScreen from './src/screens/PostScreen';
 import CategoryScreen from './src/screens/CategoryScreen';
+import Toast from 'react-native-toast-message';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +28,7 @@ const App = () => {
           <Stack.Screen name="Posts" component={PostScreen} />
         </Stack.Navigator>
       </NavigationContainer>
+      <Toast />
     </SafeAreaProvider>
   );
 };

@@ -1,29 +1,48 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {BORDERRADIUS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Clipboard from '@react-native-clipboard/clipboard';
+import Toast from 'react-native-toast-message';
 
-const PostCardFooter = () => {
+const PostCardFooter = ({postText}: {postText: string}) => {
+  const [liked, setLiked] = useState(false);
+  const handleCopy = () => {
+    Clipboard.setString(postText);
+    Toast.show({
+      type: 'success',
+      text1: 'Copied!',
+      position: 'bottom',
+      visibilityTime: 1500,
+    });
+  };
   return (
     <View style={styles.PostCardFooterContainer}>
       <View style={styles.FooterIconContainer}>
-        <TouchableOpacity>
-          <Icon name="heart-outline" size={FONTSIZE.size_20} />
+        <TouchableOpacity onPress={() => setLiked(!liked)}>
+          <Icon
+            name={liked ? 'heart' : 'heart-outline'}
+            size={FONTSIZE.size_20}
+            color={liked ? 'red' : '#000'}
+          />
         </TouchableOpacity>
         <Text style={styles.FooterLabel}>Like</Text>
       </View>
+
       <View style={styles.FooterIconContainer}>
         <TouchableOpacity>
           <Icon name="save-outline" size={FONTSIZE.size_20} />
         </TouchableOpacity>
         <Text style={styles.FooterLabel}>Save</Text>
       </View>
+
       <View style={styles.FooterIconContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleCopy}>
           <Icon name="copy-outline" size={FONTSIZE.size_20} />
         </TouchableOpacity>
         <Text style={styles.FooterLabel}>Copy</Text>
       </View>
+
       <View style={styles.FooterIconContainer}>
         <TouchableOpacity>
           <Icon name="share-outline" size={FONTSIZE.size_20} />
@@ -53,6 +72,6 @@ const styles = StyleSheet.create({
   },
   FooterLabel: {
     color: '#000',
-    fontFamily:FONTFAMILY.poppins_medium,
+    fontFamily: FONTFAMILY.poppins_medium,
   },
 });

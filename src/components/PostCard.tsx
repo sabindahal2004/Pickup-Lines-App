@@ -9,11 +9,7 @@ interface PostCardProps {
   pickup_line: string;
 }
 
-const PostCard = ({
-  item,
-}: {
-  item: PostCardProps;
-}) => {
+const PostCard = ({item}: {item: PostCardProps}) => {
   return (
     <View style={styles.PostContainer}>
       <View style={styles.CardWithFooter}>
@@ -29,7 +25,7 @@ const PostCard = ({
             </Text>
           </View>
         </View>
-        <PostCardFooter />
+        <PostCardFooter postText={item.pickup_line} />
       </View>
     </View>
   );
