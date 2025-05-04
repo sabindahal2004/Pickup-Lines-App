@@ -59,6 +59,11 @@ const PostsData = [
     pickup_line: 'Are you made of copper and tellurium? Because you’re Cu-Te.',
     category: 'bad',
   },
+  {
+    id: 12,
+    pickup_line: 'Are you made of copper and tellurium? Because you’re Cu-Te.',
+    category: 'food',
+  },
 ];
 
 export default PostsData;
