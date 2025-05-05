@@ -1,14 +1,23 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {BORDERRADIUS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
+import useLikedPostsStore from '../store/LikedPostStore';
+import {Post} from '../types/Post';
 
-const PostCardFooter = ({postText}: {postText: string}) => {
+const PostCardFooter = ({post}: {post: Post}) => {
   const [liked, setLiked] = useState(false);
+  const {likedPosts, addLikedPost, removeLikedPost} = useLikedPostsStore();
+
+  useEffect(() => {
+    const isLiked = likedPosts.some(p => p.id === post.id);
+    setLiked(isLiked);
+  }, [likedPosts, post.id]);
+
   const handleCopy = () => {
-    Clipboard.setString(postText);
+    Clipboard.setString(post.pickup_line);
     Toast.show({
       type: 'success',
       text1: 'Copied!',
@@ -16,10 +25,23 @@ const PostCardFooter = ({postText}: {postText: string}) => {
       visibilityTime: 1500,
     });
   };
+
+  const handleLike = () => {
+    if (liked) {
+      removeLikedPost(post.id);
+    } else {
+      addLikedPost({
+        id: post.id,
+        pickup_line: post.pickup_line,
+        category: post.category,
+      });
+    }
+    setLiked(!liked);
+  };
   return (
     <View style={styles.PostCardFooterContainer}>
       <View style={styles.FooterIconContainer}>
-        <TouchableOpacity onPress={() => setLiked(!liked)}>
+        <TouchableOpacity onPress={handleLike}>
           <Icon
             name={liked ? 'heart' : 'heart-outline'}
             size={FONTSIZE.size_20}

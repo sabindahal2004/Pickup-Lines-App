@@ -3,13 +3,9 @@ import React from 'react';
 import {BORDERRADIUS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import PostCardFooter from './PostCardFooter';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Post } from '../types/Post';
 
-interface PostCardProps {
-  id: number;
-  pickup_line: string;
-}
-
-const PostCard = ({item}: {item: PostCardProps}) => {
+const PostCard = ({item}: {item: Post}) => {
   return (
     <View style={styles.PostContainer}>
       <View style={styles.CardWithFooter}>
@@ -25,7 +21,7 @@ const PostCard = ({item}: {item: PostCardProps}) => {
             </Text>
           </View>
         </View>
-        <PostCardFooter postText={item.pickup_line} />
+        <PostCardFooter post={item} />
       </View>
     </View>
   );
