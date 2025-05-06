@@ -7,7 +7,7 @@ import {StyleSheet} from 'react-native';
 const CategoryScreen = ({navigation}: {navigation: any}) => {
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderBar />
+      <HeaderBar navigation={navigation} />
       <CategoryList navigation={navigation} />
     </SafeAreaView>
   );

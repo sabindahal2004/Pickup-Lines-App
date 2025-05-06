@@ -3,15 +3,12 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import RatingModal from './RatingModal';
-import useLikedPostsStore from '../store/LikedPostStore';
 
-const Header = () => {
+const HeaderBar = ({navigation}: {navigation: any}) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const likedPosts = useLikedPostsStore(state => state.likedPosts);
 
-  const handleLikedPosts = () => {
-    // Handle displaying liked posts when the diamond button is clicked
-    console.log('Liked Posts ', likedPosts);
+  const goToFavoritePost = () => {
+    navigation.navigate('Favorite');
   };
 
   return (
@@ -33,8 +30,8 @@ const Header = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.IconContainer}
-          onPress={handleLikedPosts}>
-          <Icon name="diamond-outline" size={30} color={'orange'} />
+          onPress={goToFavoritePost}>
+          <Icon name="heart-outline" size={30} color={'orange'} />
         </TouchableOpacity>
       </View>
       <RatingModal
@@ -68,8 +65,10 @@ const styles = StyleSheet.create({
   },
   RightIconContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     gap: 20,
   },
 });
 
-export default Header;
+export default HeaderBar;
