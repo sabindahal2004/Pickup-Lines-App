@@ -4,7 +4,7 @@ import CategoriesData from '../data/CategoriesData';
 import CategoryCard from './CategoryCard';
 import {SPACING} from '../theme/theme';
 
-const ItemSeparator = () => <View style={{height: SPACING.space_10}} />;
+const ItemSeparator = () => <View style={{height: SPACING.space_15}} />;
 
 const CategoryList = ({navigation}: {navigation: any}) => {
   return (

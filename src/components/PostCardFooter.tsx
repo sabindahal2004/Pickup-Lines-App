@@ -7,7 +7,7 @@ import Toast from 'react-native-toast-message';
 import useLikedPostsStore from '../store/LikedPostStore';
 import {Post} from '../types/Post';
 
-const PostCardFooter = ({post}: {post: Post}) => {
+const PostCardFooter = ({post,onSave}: {post: Post, onSave:()=> void}) => {
   const [liked, setLiked] = useState(false);
   const {likedPosts, addLikedPost, removeLikedPost} = useLikedPostsStore();
 
@@ -16,6 +16,7 @@ const PostCardFooter = ({post}: {post: Post}) => {
     setLiked(isLiked);
   }, [likedPosts, post.id]);
 
+  // Handle Copy Function
   const handleCopy = () => {
     Clipboard.setString(post.pickup_line);
     Toast.show({
@@ -26,6 +27,7 @@ const PostCardFooter = ({post}: {post: Post}) => {
     });
   };
 
+   // Handle Like Function
   const handleLike = () => {
     if (liked) {
       removeLikedPost(post.id);
@@ -38,6 +40,7 @@ const PostCardFooter = ({post}: {post: Post}) => {
     }
     setLiked(!liked);
   };
+
   return (
     <View style={styles.PostCardFooterContainer}>
       <View style={styles.FooterIconContainer}>
@@ -52,7 +55,7 @@ const PostCardFooter = ({post}: {post: Post}) => {
       </View>
 
       <View style={styles.FooterIconContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onSave}>
           <Icon name="save-outline" size={FONTSIZE.size_20} />
         </TouchableOpacity>
         <Text style={styles.FooterLabel}>Save</Text>

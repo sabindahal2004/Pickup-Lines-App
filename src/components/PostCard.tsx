@@ -1,27 +1,95 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Platform,
+  AppState,
+} from 'react-native';
+import React, {useRef} from 'react';
 import {BORDERRADIUS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import PostCardFooter from './PostCardFooter';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Post } from '../types/Post';
+import {Post} from '../types/Post';
+import ViewShot from 'react-native-view-shot';
+import Toast from 'react-native-toast-message';
+import {CameraRoll} from '@react-native-camera-roll/camera-roll';
+import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 
 const PostCard = ({item}: {item: Post}) => {
+  const viewShotRef = useRef<ViewShot>(null);
+
+  const handleSave = async () => {
+    try {
+      // Prevent permission request if app is not active
+      if (AppState.currentState !== 'active') {
+        Toast.show({
+          type: 'error',
+          text1: 'App not ready',
+          text2: 'Please wait and try again.',
+          visibilityTime:1500,
+        });
+        return;
+      }
+      const uri = await viewShotRef.current?.capture?.();
+      if (!uri) {
+        throw new Error('Failed to capture image');
+      }
+
+      const permission =
+        Platform.OS === 'android'
+          ? PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
+          : PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY;
+
+      const result = await request(permission);
+
+      if (result !== RESULTS.GRANTED) {
+        Toast.show({
+          type: 'error',
+          text1: 'Permission denied',
+          visibilityTime:1500,
+        });
+        return;
+      }
+
+      await CameraRoll.saveAsset(uri);
+      Toast.show({
+        type: 'success',
+        text1: 'Saved to gallery!',
+        position: 'bottom',
+        visibilityTime:1500,
+      });
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Save failed',
+        text2: 'Check permissions or storage.',
+        position: 'bottom',
+        visibilityTime:1500,
+      });
+    } finally {
+      console.log('Save attempt finished.');
+    }
+  };
+
   return (
     <View style={styles.PostContainer}>
       <View style={styles.CardWithFooter}>
-        <View style={styles.PostCard}>
-          <TouchableOpacity style={styles.EditIconContainer}>
-            <Icon name="brush-outline" size={FONTSIZE.size_20} />
-          </TouchableOpacity>
-          <View>
-            <Text style={styles.PickupLine}>
-              <Icon name="leaf-outline" size={FONTSIZE.size_24} />
-              {'  '}
-              {item.pickup_line}
-            </Text>
+        <ViewShot ref={viewShotRef}>
+          <View style={styles.PostCard}>
+            <View>
+              <Text style={styles.PickupLine}>
+                <Icon name="leaf-outline" size={FONTSIZE.size_24} />
+                {'  '}
+                {item.pickup_line}
+              </Text>
+            </View>
           </View>
-        </View>
-        <PostCardFooter post={item} />
+        </ViewShot>
+        <TouchableOpacity style={styles.EditIconContainer}>
+              <Icon name="brush-outline" size={FONTSIZE.size_20} />
+            </TouchableOpacity>
+        <PostCardFooter post={item} onSave={handleSave} />
       </View>
     </View>
   );
@@ -61,6 +129,7 @@ const styles = StyleSheet.create({
     elevation: 4,
     borderRadius: BORDERRADIUS.radius_10,
     backgroundColor: 'white',
+    position:'relative',
   },
 });
 
