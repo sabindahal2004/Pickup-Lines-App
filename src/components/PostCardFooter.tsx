@@ -7,7 +7,15 @@ import Toast from 'react-native-toast-message';
 import useLikedPostsStore from '../store/LikedPostStore';
 import {Post} from '../types/Post';
 
-const PostCardFooter = ({post,onSave}: {post: Post, onSave:()=> void}) => {
+const PostCardFooter = ({
+  post,
+  onSave,
+  onShare,
+}: {
+  post: Post;
+  onSave: () => void;
+  onShare: () => void;
+}) => {
   const [liked, setLiked] = useState(false);
   const {likedPosts, addLikedPost, removeLikedPost} = useLikedPostsStore();
 
@@ -27,7 +35,7 @@ const PostCardFooter = ({post,onSave}: {post: Post, onSave:()=> void}) => {
     });
   };
 
-   // Handle Like Function
+  // Handle Like Function
   const handleLike = () => {
     if (liked) {
       removeLikedPost(post.id);
@@ -69,7 +77,7 @@ const PostCardFooter = ({post,onSave}: {post: Post, onSave:()=> void}) => {
       </View>
 
       <View style={styles.FooterIconContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onShare}>
           <Icon name="share-outline" size={FONTSIZE.size_20} />
         </TouchableOpacity>
         <Text style={styles.FooterLabel}>Share</Text>

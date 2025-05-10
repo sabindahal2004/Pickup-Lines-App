@@ -15,6 +15,7 @@ import ViewShot from 'react-native-view-shot';
 import Toast from 'react-native-toast-message';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
+import Share from 'react-native-share';
 
 const PostCard = ({item}: {item: Post}) => {
   const viewShotRef = useRef<ViewShot>(null);
@@ -27,7 +28,7 @@ const PostCard = ({item}: {item: Post}) => {
           type: 'error',
           text1: 'App not ready',
           text2: 'Please wait and try again.',
-          visibilityTime:1500,
+          visibilityTime: 1500,
         });
         return;
       }
@@ -47,7 +48,7 @@ const PostCard = ({item}: {item: Post}) => {
         Toast.show({
           type: 'error',
           text1: 'Permission denied',
-          visibilityTime:1500,
+          visibilityTime: 1500,
         });
         return;
       }
@@ -57,7 +58,7 @@ const PostCard = ({item}: {item: Post}) => {
         type: 'success',
         text1: 'Saved to gallery!',
         position: 'bottom',
-        visibilityTime:1500,
+        visibilityTime: 1500,
       });
     } catch (error) {
       Toast.show({
@@ -65,10 +66,32 @@ const PostCard = ({item}: {item: Post}) => {
         text1: 'Save failed',
         text2: 'Check permissions or storage.',
         position: 'bottom',
-        visibilityTime:1500,
+        visibilityTime: 1500,
       });
     } finally {
       console.log('Save attempt finished.');
+    }
+  };
+
+  const handleShare = async () => {
+    try {
+      const uri = await viewShotRef.current?.capture?.();
+      if (!uri) {
+        throw new Error('Failed to capture image');
+      }
+      await Share.open({
+        url: 'file://' + uri,
+        type: 'image/jpeg',
+        failOnCancel: false,
+        message: 'Thank you for using Pickup Lines',
+      });
+    } catch (error) {
+      console.log('Error sharing image', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Failed to share',
+        text2: 'Try again or check permissions',
+      });
     }
   };
 
@@ -87,9 +110,9 @@ const PostCard = ({item}: {item: Post}) => {
           </View>
         </ViewShot>
         <TouchableOpacity style={styles.EditIconContainer}>
-              <Icon name="brush-outline" size={FONTSIZE.size_20} />
-            </TouchableOpacity>
-        <PostCardFooter post={item} onSave={handleSave} />
+          <Icon name="brush-outline" size={FONTSIZE.size_20} />
+        </TouchableOpacity>
+        <PostCardFooter post={item} onSave={handleSave} onShare={handleShare} />
       </View>
     </View>
   );
@@ -129,7 +152,7 @@ const styles = StyleSheet.create({
     elevation: 4,
     borderRadius: BORDERRADIUS.radius_10,
     backgroundColor: 'white',
-    position:'relative',
+    position: 'relative',
   },
 });
 
