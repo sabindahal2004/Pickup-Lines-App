@@ -5,8 +5,9 @@ import {
   TouchableOpacity,
   Platform,
   AppState,
+  Pressable,
 } from 'react-native';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {BORDERRADIUS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import PostCardFooter from './PostCardFooter';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -18,6 +19,13 @@ import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import Share from 'react-native-share';
 
 const PostCard = ({item}: {item: Post}) => {
+  const Colors = ['#000','purple', '#ff6b6b', '#6bc1ff', '#a1ff6b', '#f5a623'];
+  const [colorIndex, setColorIndex] = useState(0);
+
+  const handlePress = () => {
+    setColorIndex(previousIndex => (previousIndex + 1) % Colors.length);
+  };
+
   const viewShotRef = useRef<ViewShot>(null);
 
   const handleSave = async () => {
@@ -99,7 +107,9 @@ const PostCard = ({item}: {item: Post}) => {
     <View style={styles.PostContainer}>
       <View style={styles.CardWithFooter}>
         <ViewShot ref={viewShotRef}>
-          <View style={styles.PostCard}>
+          <Pressable
+            style={[styles.PostCard, {backgroundColor: Colors[colorIndex]}]}
+            onPress={handlePress}>
             <View>
               <Text style={styles.PickupLine}>
                 <Icon name="leaf-outline" size={FONTSIZE.size_24} />
@@ -107,7 +117,7 @@ const PostCard = ({item}: {item: Post}) => {
                 {item.pickup_line}
               </Text>
             </View>
-          </View>
+          </Pressable>
         </ViewShot>
         <TouchableOpacity style={styles.EditIconContainer}>
           <Icon name="brush-outline" size={FONTSIZE.size_20} />

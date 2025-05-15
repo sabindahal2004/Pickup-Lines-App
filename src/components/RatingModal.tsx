@@ -15,7 +15,7 @@ interface RatingModalProps {
   onClose: () => void;
 }
 const {height} = Dimensions.get('window');
-const modalHeight = Math.min(height * 0.75, 500);
+const modalHeight = Math.min(height * 0.55, 500);
 const RatingModal = ({visible, onClose}: RatingModalProps) => {
   return (
     <Modal
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     left: 0,
     marginLeft: SPACING.space_15,
     marginTop: SPACING.space_15,
-    zIndex:1,
+    zIndex: 1,
   },
 });
 
