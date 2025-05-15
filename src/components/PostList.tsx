@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.space_10,
     paddingHorizontal: SPACING.space_10,
     gap: SPACING.space_12,
+    marginBottom:SPACING.space_10,
   },
   backButton: {
     paddingRight: 10,
