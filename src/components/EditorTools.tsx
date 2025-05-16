@@ -6,9 +6,11 @@ import {FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 const EditorTools = ({
   onShare,
   onSave,
+  onBgChange,
 }: {
   onShare: () => void;
   onSave: () => void;
+  onBgChange: () => void;
 }) => {
   return (
     <View style={styles.ToolsContainer}>
@@ -55,9 +57,9 @@ const EditorTools = ({
           <Icon name="aperture-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Gradient</Text>
         </Pressable>
-        <Pressable style={styles.Tools}>
+        <Pressable style={styles.Tools} onPress={onBgChange}>
           <Icon name="color-fill-outline" size={SPACING.space_36} />
-          <Text style={styles.ToolText}>Color</Text>
+          <Text style={styles.ToolText}>BG Color</Text>
         </Pressable>
         <Pressable style={styles.Tools}>
           <Icon name="image-outline" size={SPACING.space_36} />

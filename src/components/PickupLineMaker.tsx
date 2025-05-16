@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, TouchableOpacity, Platform} from 'react-native';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {SPACING, FONTFAMILY, FONTSIZE} from '../theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import EditorTools from './EditorTools';
@@ -18,6 +18,13 @@ const PickupLineMaker = ({
 }) => {
   const handleBack = () => {
     navigation.goBack();
+  };
+
+  const Colors = ['#ddd', 'purple', '#ff6b6b', '#6bc1ff', '#a1ff6b', '#f5a623'];
+  const [colorIndex, setColorIndex] = useState(0);
+
+  const handleBgColor = () => {
+    setColorIndex(previousIndex => (previousIndex + 1) % Colors.length);
   };
 
   const viewShotRef = useRef<ViewShot>(null);
@@ -96,7 +103,7 @@ const PickupLineMaker = ({
         <Text style={styles.title}>Pickup Line Maker</Text>
       </View>
       <ViewShot ref={viewShotRef}>
-        <View style={styles.PostCard}>
+        <View style={[styles.PostCard, {backgroundColor:Colors[colorIndex]}]}>
           <View>
             <Text style={styles.PickupLine}>{pickupLine}</Text>
           </View>
@@ -106,7 +113,7 @@ const PickupLineMaker = ({
           </View>
         </View>
       </ViewShot>
-      <EditorTools onShare={handleShare} onSave={handleSave} />
+      <EditorTools onShare={handleShare} onSave={handleSave} onBgChange={handleBgColor} />
     </View>
   );
 };
@@ -165,3 +172,4 @@ const styles = StyleSheet.create({
     color: '#777',
   },
 });
+
