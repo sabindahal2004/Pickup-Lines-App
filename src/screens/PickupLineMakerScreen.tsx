@@ -1,20 +1,21 @@
-import React from 'react';
 import {StyleSheet} from 'react-native';
+import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import PostList from '../components/PostList';
+import PickupLineMaker from '../components/PickupLineMaker';
 import { useRoute } from '@react-navigation/native';
 
-const PostScreen = ({navigation}: {navigation: any}) => {
+const PickupLineMakerScreen = ({navigation}:{navigation:any}) => {
   const route = useRoute();
-  const {category}:any = route.params;
+  const {pickupLine}:any = route.params;
   return (
     <SafeAreaView style={styles.Container}>
-      <PostList navigation={navigation} category={category} />
+      <PickupLineMaker navigation={navigation} pickupLine={pickupLine} />
     </SafeAreaView>
   );
 };
 
-export default PostScreen;
+export default PickupLineMakerScreen;
+
 const styles = StyleSheet.create({
   Container: {
     flex: 1,

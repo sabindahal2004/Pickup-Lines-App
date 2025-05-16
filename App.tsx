@@ -7,6 +7,7 @@ import PostScreen from './src/screens/PostScreen';
 import CategoryScreen from './src/screens/CategoryScreen';
 import Toast from 'react-native-toast-message';
 import FavoritePost from './src/screens/FavoritePostScreen';
+import PickupLineMakerScreen from './src/screens/PickupLineMakerScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -28,6 +29,7 @@ const App = () => {
           />
           <Stack.Screen name="Posts" component={PostScreen} />
           <Stack.Screen name="Favorite" component={FavoritePost} />
+          <Stack.Screen name="LineMaker" component={PickupLineMakerScreen} />
         </Stack.Navigator>
       </NavigationContainer>
       <Toast />

@@ -29,7 +29,7 @@ const PostList = ({
       {/* Post List */}
       <FlatList
         data={filteredPosts}
-        renderItem={({item}) => <PostCard item={item} />}
+        renderItem={({item}) => <PostCard item={item} navigation={navigation} />}
         keyExtractor={item => item.id.toString()}
         contentContainerStyle={styles.PostListContainer}
         showsVerticalScrollIndicator={false}

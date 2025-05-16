@@ -18,8 +18,8 @@ import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import Share from 'react-native-share';
 
-const PostCard = ({item}: {item: Post}) => {
-  const Colors = ['#000','purple', '#ff6b6b', '#6bc1ff', '#a1ff6b', '#f5a623'];
+const PostCard = ({item, navigation}: {item: Post; navigation: any}) => {
+  const Colors = ['#000', 'purple', '#ff6b6b', '#6bc1ff', '#a1ff6b', '#f5a623'];
   const [colorIndex, setColorIndex] = useState(0);
 
   const handlePress = () => {
@@ -103,6 +103,10 @@ const PostCard = ({item}: {item: Post}) => {
     }
   };
 
+  const handleEdit = () => {
+    navigation.navigate('LineMaker',{pickupLine:item.pickup_line});
+  };
+
   return (
     <View style={styles.PostContainer}>
       <View style={styles.CardWithFooter}>
@@ -119,7 +123,7 @@ const PostCard = ({item}: {item: Post}) => {
             </View>
           </Pressable>
         </ViewShot>
-        <TouchableOpacity style={styles.EditIconContainer}>
+        <TouchableOpacity style={styles.EditIconContainer} onPress={handleEdit}>
           <Icon name="brush-outline" size={FONTSIZE.size_20} />
         </TouchableOpacity>
         <PostCardFooter post={item} onSave={handleSave} onShare={handleShare} />
@@ -136,7 +140,6 @@ const styles = StyleSheet.create({
     height: 390,
     paddingHorizontal: SPACING.space_30,
     overflow: 'hidden',
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     borderTopRightRadius: BORDERRADIUS.radius_10,
