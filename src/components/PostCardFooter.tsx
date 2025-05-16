@@ -78,7 +78,7 @@ const PostCardFooter = ({
 
       <View style={styles.FooterIconContainer}>
         <TouchableOpacity onPress={onShare}>
-          <Icon name="share-outline" size={FONTSIZE.size_20} />
+          <Icon name="share-social-outline" size={FONTSIZE.size_20} />
         </TouchableOpacity>
         <Text style={styles.FooterLabel}>Share</Text>
       </View>

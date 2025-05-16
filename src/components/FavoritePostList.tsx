@@ -36,7 +36,7 @@ const FavoritePostList = ({navigation}: {navigation: any}) => {
         // Favorite List
         <FlatList
           data={likedPosts}
-          renderItem={({item}) => <FavoritePostCard item={item} />}
+          renderItem={({item}) => <FavoritePostCard item={item} navigation={navigation} />}
           keyExtractor={item => item.id.toString()}
           contentContainerStyle={styles.PostListContainer}
           showsVerticalScrollIndicator={false}

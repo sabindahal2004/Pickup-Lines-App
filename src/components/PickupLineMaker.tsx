@@ -1,7 +1,13 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, Platform} from 'react-native';
+import React, {useRef} from 'react';
 import {SPACING, FONTFAMILY, FONTSIZE} from '../theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
+import EditorTools from './EditorTools';
+import ViewShot from 'react-native-view-shot';
+import Share from 'react-native-share';
+import Toast from 'react-native-toast-message';
+import {CameraRoll} from '@react-native-camera-roll/camera-roll';
+import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 
 const PickupLineMaker = ({
   navigation,
@@ -13,23 +19,94 @@ const PickupLineMaker = ({
   const handleBack = () => {
     navigation.goBack();
   };
+
+  const viewShotRef = useRef<ViewShot>(null);
+  const handleShare = async () => {
+    try {
+      const uri = await viewShotRef.current?.capture?.();
+      if (!uri) {
+        throw new Error('Failed to capture image');
+      }
+
+      await Share.open({
+        url: 'file://' + uri,
+        type: 'image/jpeg',
+        failOnCancel: false,
+        message: 'Thank you for using Pickup Lines',
+      });
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Failed to share',
+        text2: 'Try again or check permissions',
+        visibilityTime: 1500,
+        position: 'bottom',
+      });
+    }
+  };
+  const handleSave = async () => {
+    try {
+      const uri = await viewShotRef.current?.capture?.();
+      if (!uri) {
+        throw new Error('Failed to capture image');
+      }
+
+      const permission =
+        Platform.OS === 'android'
+          ? PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
+          : PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY;
+
+      const result = await request(permission);
+
+      if (result !== RESULTS.GRANTED) {
+        Toast.show({
+          type: 'error',
+          text1: 'Permission denied',
+          visibilityTime: 1500,
+          position: 'bottom',
+        });
+        return;
+      }
+
+      await CameraRoll.saveAsset(uri);
+      Toast.show({
+        type: 'success',
+        text1: 'Saved to gallery!',
+        position: 'bottom',
+        visibilityTime: 1500,
+      });
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Save failed',
+        text2: 'Check permissions or storage.',
+        position: 'bottom',
+        visibilityTime: 1500,
+      });
+    } finally {
+      console.log('Save attempt finished.');
+    }
+  };
   return (
-    <View style={styles.PostContainer}>
+    <View style={styles.PostEditorContainer}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleBack} style={styles.backButton}>
           <Icon name="chevron-back-outline" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.title}>Pickup Line Maker</Text>
       </View>
-      <View style={styles.PostCard}>
-        <View>
-          <Text style={styles.PickupLine}>{pickupLine}</Text>
+      <ViewShot ref={viewShotRef}>
+        <View style={styles.PostCard}>
+          <View>
+            <Text style={styles.PickupLine}>{pickupLine}</Text>
+          </View>
+          <View style={styles.Watermark}>
+            <Text style={styles.Copyright}>&copy;</Text>
+            <Text style={styles.WatermarkText}>Pickup Lines</Text>
+          </View>
         </View>
-        <View style={styles.Watermark}>
-          <Text style={styles.Copyright}>&copy;</Text>
-          <Text style={styles.WatermarkText}>Pickup Lines</Text>
-        </View>
-      </View>
+      </ViewShot>
+      <EditorTools onShare={handleShare} onSave={handleSave} />
     </View>
   );
 };
@@ -37,7 +114,7 @@ const PickupLineMaker = ({
 export default PickupLineMaker;
 
 const styles = StyleSheet.create({
-  PostContainer: {},
+  PostEditorContainer: {},
   PostCard: {
     backgroundColor: '#ddd',
     height: 390,

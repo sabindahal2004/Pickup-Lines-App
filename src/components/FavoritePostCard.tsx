@@ -3,14 +3,25 @@ import React from 'react';
 import {BORDERRADIUS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import PostCardFooter from './PostCardFooter';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Post } from '../types/Post';
+import {Post} from '../types/Post';
 
-const FavoritePostCard = ({item}: {item: Post}) => {
+const FavoritePostCard = ({
+  item,
+  navigation,
+}: {
+  item: Post;
+  navigation: any;
+}) => {
+  const handleEdit = () => {
+    navigation.navigate('LineMaker', {pickupLine: item.pickup_line});
+  };
   return (
     <View style={styles.PostContainer}>
       <View style={styles.CardWithFooter}>
         <View style={styles.PostCard}>
-          <TouchableOpacity style={styles.EditIconContainer}>
+          <TouchableOpacity
+            style={styles.EditIconContainer}
+            onPress={handleEdit}>
             <Icon name="brush-outline" size={FONTSIZE.size_20} />
           </TouchableOpacity>
           <View>
@@ -21,7 +32,11 @@ const FavoritePostCard = ({item}: {item: Post}) => {
             </Text>
           </View>
         </View>
-        <PostCardFooter post={item} />
+        <PostCardFooter
+          post={item}
+          onSave={() => console.log('Save action triggered')}
+          onShare={() => console.log('Share action triggered')}
+        />
       </View>
     </View>
   );
