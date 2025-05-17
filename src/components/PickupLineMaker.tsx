@@ -19,7 +19,7 @@ const PickupLineMaker = ({
   const handleBack = () => {
     navigation.goBack();
   };
-
+  //Change background color
   const Colors = ['#ddd', 'purple', '#ff6b6b', '#6bc1ff', '#a1ff6b', '#f5a623'];
   const [colorIndex, setColorIndex] = useState(0);
 
@@ -28,6 +28,7 @@ const PickupLineMaker = ({
   };
 
   const viewShotRef = useRef<ViewShot>(null);
+  //Share
   const handleShare = async () => {
     try {
       const uri = await viewShotRef.current?.capture?.();
@@ -51,6 +52,7 @@ const PickupLineMaker = ({
       });
     }
   };
+  //Save
   const handleSave = async () => {
     try {
       const uri = await viewShotRef.current?.capture?.();
@@ -95,14 +97,36 @@ const PickupLineMaker = ({
     }
   };
 
+  // Text Algin
   const AlignProperties = ['center', 'left', 'right'] as const;
   const [textAlignIndex, setTextAlignIndex] = useState(0);
-
-  const handleAlign = () => {
+  const handleTextAlign = () => {
     setTextAlignIndex(
       previousIndex => (previousIndex + 1) % AlignProperties.length,
     );
   };
+
+  //Text Shadow
+  const ShadowOptions = [
+    {},
+    {
+      textShadowColor: '#888',
+      textShadowOffset: {width: 1, height: -2},
+      textShadowRadius: 4,
+    },
+    {
+      textShadowColor: '#888',
+      textShadowOffset: {width: 1, height: 2},
+      textShadowRadius: 4,
+    },
+  ];
+
+  const [shadowIndex, setShadowIndex] = useState(0);
+  const textShadowStyle = ShadowOptions[shadowIndex];
+  const handleTextShadow = () => {
+    setShadowIndex(previousIndex => (previousIndex + 1) % ShadowOptions.length);
+  };
+
   return (
     <View style={styles.PostEditorContainer}>
       <View style={styles.header}>
@@ -118,6 +142,7 @@ const PickupLineMaker = ({
               style={[
                 styles.PickupLine,
                 {textAlign: AlignProperties[textAlignIndex]},
+                textShadowStyle,
               ]}>
               {pickupLine}
             </Text>
@@ -132,7 +157,8 @@ const PickupLineMaker = ({
         onShare={handleShare}
         onSave={handleSave}
         onBgChange={handleBgColor}
-        onTextAlign={handleAlign}
+        onTextAlign={handleTextAlign}
+        onTextShadowChange={handleTextShadow}
       />
     </View>
   );
@@ -155,7 +181,6 @@ const styles = StyleSheet.create({
   PickupLine: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_24,
-    color: '#000',
   },
   header: {
     flexDirection: 'row',
@@ -179,7 +204,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     gap: 1,
-    marginLeft:'50%',
+    marginLeft: '50%',
   },
   WatermarkText: {
     fontFamily: FONTFAMILY.poppins_semibold,

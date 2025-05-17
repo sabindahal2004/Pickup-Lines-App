@@ -8,11 +8,13 @@ const EditorTools = ({
   onSave,
   onBgChange,
   onTextAlign,
+  onTextShadowChange,
 }: {
   onShare: () => void;
   onSave: () => void;
   onBgChange: () => void;
   onTextAlign: () => void;
+  onTextShadowChange: () => void;
 }) => {
   return (
     <View style={styles.ToolsContainer}>
@@ -45,9 +47,9 @@ const EditorTools = ({
           <Icon name="sparkles-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Text Style</Text>
         </Pressable>
-        <Pressable style={styles.Tools}>
+        <Pressable style={styles.Tools} onPress={onTextShadowChange}>
           <Icon name="invert-mode-outline" size={SPACING.space_36} />
-          <Text style={styles.ToolText}>Shadow</Text>
+          <Text style={styles.ToolText}>Text Shadow</Text>
         </Pressable>
       </ScrollView>
       <ScrollView
