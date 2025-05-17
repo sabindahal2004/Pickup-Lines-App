@@ -7,10 +7,12 @@ const EditorTools = ({
   onShare,
   onSave,
   onBgChange,
+  onTextAlign,
 }: {
   onShare: () => void;
   onSave: () => void;
   onBgChange: () => void;
+  onTextAlign: () => void;
 }) => {
   return (
     <View style={styles.ToolsContainer}>
@@ -31,9 +33,9 @@ const EditorTools = ({
           <Icon name="text-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Fonts</Text>
         </Pressable>
-        <Pressable style={styles.Tools}>
+        <Pressable style={styles.Tools} onPress={onTextAlign}>
           <Icon name="stats-chart-outline" size={SPACING.space_36} />
-          <Text style={styles.ToolText}>Align</Text>
+          <Text style={styles.ToolText}>Text Align</Text>
         </Pressable>
         <Pressable style={styles.Tools}>
           <Icon name="code-working-outline" size={SPACING.space_36} />
@@ -85,7 +87,7 @@ const EditorTools = ({
 const styles = StyleSheet.create({
   ScrollContainer: {
     paddingHorizontal: SPACING.space_36,
-    gap: SPACING.space_36,
+    gap: 34,
   },
   ToolsContainer: {
     marginTop: '48%',

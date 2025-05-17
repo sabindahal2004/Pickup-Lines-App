@@ -94,6 +94,15 @@ const PickupLineMaker = ({
       console.log('Save attempt finished.');
     }
   };
+
+  const AlignProperties = ['center', 'left', 'right'] as const;
+  const [textAlignIndex, setTextAlignIndex] = useState(0);
+
+  const handleAlign = () => {
+    setTextAlignIndex(
+      previousIndex => (previousIndex + 1) % AlignProperties.length,
+    );
+  };
   return (
     <View style={styles.PostEditorContainer}>
       <View style={styles.header}>
@@ -103,9 +112,15 @@ const PickupLineMaker = ({
         <Text style={styles.title}>Pickup Line Maker</Text>
       </View>
       <ViewShot ref={viewShotRef}>
-        <View style={[styles.PostCard, {backgroundColor:Colors[colorIndex]}]}>
+        <View style={[styles.PostCard, {backgroundColor: Colors[colorIndex]}]}>
           <View>
-            <Text style={styles.PickupLine}>{pickupLine}</Text>
+            <Text
+              style={[
+                styles.PickupLine,
+                {textAlign: AlignProperties[textAlignIndex]},
+              ]}>
+              {pickupLine}
+            </Text>
           </View>
           <View style={styles.Watermark}>
             <Text style={styles.Copyright}>&copy;</Text>
@@ -113,7 +128,12 @@ const PickupLineMaker = ({
           </View>
         </View>
       </ViewShot>
-      <EditorTools onShare={handleShare} onSave={handleSave} onBgChange={handleBgColor} />
+      <EditorTools
+        onShare={handleShare}
+        onSave={handleSave}
+        onBgChange={handleBgColor}
+        onTextAlign={handleAlign}
+      />
     </View>
   );
 };
@@ -128,7 +148,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.space_30,
     overflow: 'hidden',
     justifyContent: 'center',
-    alignItems: 'center',
     borderRadius: SPACING.space_10,
     marginHorizontal: SPACING.space_15,
     elevation: 2,
@@ -137,7 +156,6 @@ const styles = StyleSheet.create({
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_24,
     color: '#000',
-    textAlign: 'center',
   },
   header: {
     flexDirection: 'row',
@@ -161,6 +179,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     gap: 1,
+    marginLeft:'50%',
   },
   WatermarkText: {
     fontFamily: FONTFAMILY.poppins_semibold,
@@ -172,4 +191,3 @@ const styles = StyleSheet.create({
     color: '#777',
   },
 });
-
