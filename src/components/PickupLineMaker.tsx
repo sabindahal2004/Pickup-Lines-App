@@ -127,6 +127,20 @@ const PickupLineMaker = ({
     setShadowIndex(previousIndex => (previousIndex + 1) % ShadowOptions.length);
   };
 
+  // Text Styles
+  const FontStyles = [
+    {fontStyle: 'normal', fontWeight: 'normal'},
+    {fontStyle: 'italic', fontWeight: 'normal'},
+    {fontStyle: 'normal', fontWeight: 'bold'},
+    {fontStyle: 'italic', fontWeight: 'bold'},
+  ] as const;
+
+  const [fontStyleIndex, setFontStyleIndex] = useState(0);
+  const currentFontStyle = FontStyles[fontStyleIndex];
+
+  const handleFontStyleChange = () => {
+    setFontStyleIndex(prev => (prev + 1) % FontStyles.length);
+  };
   return (
     <View style={styles.PostEditorContainer}>
       <View style={styles.header}>
@@ -143,6 +157,7 @@ const PickupLineMaker = ({
                 styles.PickupLine,
                 {textAlign: AlignProperties[textAlignIndex]},
                 textShadowStyle,
+                currentFontStyle,
               ]}>
               {pickupLine}
             </Text>
@@ -159,6 +174,7 @@ const PickupLineMaker = ({
         onBgChange={handleBgColor}
         onTextAlign={handleTextAlign}
         onTextShadowChange={handleTextShadow}
+        onTextStyleChange={handleFontStyleChange}
       />
     </View>
   );

@@ -9,12 +9,14 @@ const EditorTools = ({
   onBgChange,
   onTextAlign,
   onTextShadowChange,
+  onTextStyleChange,
 }: {
   onShare: () => void;
   onSave: () => void;
   onBgChange: () => void;
   onTextAlign: () => void;
   onTextShadowChange: () => void;
+  onTextStyleChange: () => void;
 }) => {
   return (
     <View style={styles.ToolsContainer}>
@@ -43,7 +45,7 @@ const EditorTools = ({
           <Icon name="code-working-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Padding</Text>
         </Pressable>
-        <Pressable style={styles.Tools}>
+        <Pressable style={styles.Tools} onPress={onTextStyleChange}>
           <Icon name="sparkles-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Text Style</Text>
         </Pressable>
