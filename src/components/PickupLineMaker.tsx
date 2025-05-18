@@ -144,13 +144,13 @@ const PickupLineMaker = ({
     setShowColorPicker(true);
   };
 
-  //Wheel Background Color Picker
-  // const [bgColor, setBgColor] = useState('#ddd');
-  // const [showBgColorPicker, setShowBgColorPicker] = useState(false);
+  // Wheel Background Color Picker
+  const [bgColor, setBgColor] = useState('#ddd');
+  const [showBgColorPicker, setShowBgColorPicker] = useState(false);
 
-  // const handleBgColor = () => {
-  //   setShowBgColorPicker(true);
-  // };
+  const handleBgColor = () => {
+    setShowBgColorPicker(true);
+  };
   return (
     <View style={styles.PostEditorContainer}>
       <View style={styles.header}>
@@ -160,7 +160,7 @@ const PickupLineMaker = ({
         <Text style={styles.title}>Pickup Line Maker</Text>
       </View>
       <ViewShot ref={viewShotRef}>
-        <View style={[styles.PostCard]}>
+        <View style={[styles.PostCard, {backgroundColor:bgColor}]}>
           <View>
             <Text
               style={[
@@ -207,7 +207,7 @@ const PickupLineMaker = ({
       )}
 
       {/* Background Color Picker */}
-      {/* {showBgColorPicker && (
+      {showBgColorPicker && (
         <View style={styles.ColorPickerContainer}>
           <WheelColorPicker
             color={bgColor}
@@ -230,7 +230,7 @@ const PickupLineMaker = ({
             </View>
           </TouchableOpacity>
         </View>
-      )} */}
+      )}
       <EditorTools
         onShare={handleShare}
         onSave={handleSave}
@@ -238,7 +238,7 @@ const PickupLineMaker = ({
         onTextShadowChange={handleTextShadow}
         onTextStyleChange={handleFontStyleChange}
         onTextColorChange={handleTextColor}
-        // onBgColorChange={handleBgColor}
+        onBgColorChange={handleBgColor}
       />
     </View>
   );

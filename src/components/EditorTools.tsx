@@ -10,7 +10,7 @@ const EditorTools = ({
   onTextShadowChange,
   onTextStyleChange,
   onTextColorChange,
-  // onBgColorChange,
+  onBgColorChange,
 }: {
   onShare: () => void;
   onSave: () => void;
@@ -18,7 +18,7 @@ const EditorTools = ({
   onTextShadowChange: () => void;
   onTextStyleChange: () => void;
   onTextColorChange: () => void;
-  // onBgColorChange: () => void;
+  onBgColorChange: () => void;
 }) => {
   return (
     <View style={styles.ToolsContainer}>
@@ -65,7 +65,7 @@ const EditorTools = ({
           <Icon name="aperture-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Gradient</Text>
         </Pressable>
-        <Pressable style={styles.Tools} onPress={()=>{}}>
+        <Pressable style={styles.Tools} onPress={onBgColorChange}>
           <Icon name="color-fill-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>BG Color</Text>
         </Pressable>
