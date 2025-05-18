@@ -166,6 +166,18 @@ const PickupLineMaker = ({
     setShowFontSlider(true);
   };
 
+  // Padding Slider
+  const [leftPadding, setLeftPadding] = useState(30);
+  const [rightPadding, setRightPadding] = useState(30);
+  const [topPadding, setTopPadding] = useState(0);
+  const [bottomPadding, setBottomPadding] = useState(0);
+
+  const [showPaddingSlider, setShowPaddingSlider] = useState(false);
+
+  const handleTextPadding = () => {
+    setShowPaddingSlider(true);
+  };
+
   return (
     <View style={styles.PostEditorContainer}>
       <View style={styles.header}>
@@ -185,6 +197,12 @@ const PickupLineMaker = ({
                 currentFontStyle,
                 {color: textColor},
                 {fontSize: fontSizeRange},
+                {
+                  paddingLeft: leftPadding,
+                  paddingRight: rightPadding,
+                  paddingTop: topPadding,
+                  paddingBottom: bottomPadding,
+                },
               ]}>
               {pickupLine}
             </Text>
@@ -269,6 +287,70 @@ const PickupLineMaker = ({
           </TouchableOpacity>
         </View>
       )}
+
+      {/* Padding Slider */}
+      {showPaddingSlider && (
+        <View style={styles.PaddingContainer}>
+          <Text style={styles.PaddingTextTitle}>Padding</Text>
+          <View style={styles.SliderContainer}>
+            <View style={styles.HorizontalPadding}>
+              {/* Left Padding Slider */}
+              <Slider
+                style={styles.Slider}
+                onValueChange={setLeftPadding}
+                minimumValue={10}
+                maximumValue={50}
+                step={1}
+                minimumTrackTintColor="purple"
+                thumbTintColor="purple"
+                value={leftPadding}
+              />
+              {/* Right Padding Slider */}
+              <Slider
+                style={styles.Slider}
+                onValueChange={setRightPadding}
+                minimumValue={10}
+                maximumValue={50}
+                step={1}
+                minimumTrackTintColor="purple"
+                thumbTintColor="purple"
+                value={rightPadding}
+              />
+            </View>
+
+            <View style={styles.HorizontalPadding}>
+              {/* Top Padding Slider */}
+              <Slider
+                style={styles.Slider}
+                onValueChange={setTopPadding}
+                minimumValue={-10}
+                maximumValue={50}
+                step={1}
+                minimumTrackTintColor="purple"
+                thumbTintColor="purple"
+                value={topPadding}
+              />
+              {/* Bottom Padding Slider */}
+              <Slider
+                style={styles.Slider}
+                onValueChange={setBottomPadding}
+                minimumValue={-10}
+                maximumValue={50}
+                step={1}
+                minimumTrackTintColor="purple"
+                thumbTintColor="purple"
+                value={bottomPadding}
+              />
+            </View>
+          </View>
+          <TouchableOpacity
+            style={styles.DoneBtn}
+            onPress={() => setShowPaddingSlider(false)}>
+            <Text style={styles.DoneBtnText}>done</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
       <EditorTools
         onShare={handleShare}
         onSave={handleSave}
@@ -278,6 +360,7 @@ const PickupLineMaker = ({
         onTextColorChange={handleTextColor}
         onBgColorChange={handleBgColor}
         onFontSizeChange={handleFontSize}
+        onPaddingChange={handleTextPadding}
       />
     </View>
   );
@@ -290,7 +373,6 @@ const styles = StyleSheet.create({
   PostCard: {
     backgroundColor: '#ddd',
     height: 390,
-    paddingHorizontal: SPACING.space_30,
     overflow: 'hidden',
     justifyContent: 'center',
     borderRadius: SPACING.space_10,
@@ -322,7 +404,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     gap: 1,
-    marginLeft: '50%',
+    left: '50%',
+    transform: [{translateX: -50}],
   },
   WatermarkText: {
     fontFamily: FONTFAMILY.poppins_semibold,
@@ -343,11 +426,12 @@ const styles = StyleSheet.create({
     height: '20%',
     alignSelf: 'center',
     justifyContent: 'center',
+    width: '92%',
   },
   ColorPickerDoneText: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_14,
-    color: 'purple',
+    color: 'white',
     textTransform: 'uppercase',
   },
   DoneContainer: {
@@ -356,20 +440,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: SPACING.space_10,
     gap: 2,
+    backgroundColor: 'purple',
   },
   CheckmarkIcon: {
     fontFamily: FONTFAMILY.poppins_semibold,
-    color: 'purple',
+    color: 'white',
   },
   TextSizeSlider: {
     height: '20%',
     width: '100%',
     paddingHorizontal: SPACING.space_8,
-    marginTop: '45%',
-    paddingBottom: '10%',
+    marginTop: '43%',
   },
   DoneBtn: {
     backgroundColor: 'purple',
+    // elevation:2,
   },
   DoneBtnText: {
     color: '#fff',
@@ -383,5 +468,25 @@ const styles = StyleSheet.create({
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_16,
     textAlign: 'center',
+  },
+  PaddingContainer: {
+    height: '40%',
+    width: '100%',
+    paddingHorizontal: SPACING.space_8,
+    marginTop: '40%',
+  },
+  SliderContainer: {},
+  PaddingTextTitle: {
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_16,
+    textAlign: 'center',
+    marginBottom: SPACING.space_10,
+  },
+  Slider: {
+    width: '50%',
+    height: 50,
+  },
+  HorizontalPadding: {
+    flexDirection: 'row',
   },
 });

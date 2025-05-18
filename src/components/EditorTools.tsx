@@ -12,6 +12,7 @@ const EditorTools = ({
   onTextColorChange,
   onBgColorChange,
   onFontSizeChange,
+  onPaddingChange,
 }: {
   onShare: () => void;
   onSave: () => void;
@@ -21,6 +22,7 @@ const EditorTools = ({
   onTextColorChange: () => void;
   onBgColorChange: () => void;
   onFontSizeChange: () => void;
+  onPaddingChange: () => void;
 }) => {
   return (
     <View style={styles.ToolsContainer}>
@@ -45,7 +47,7 @@ const EditorTools = ({
           <Icon name="stats-chart-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Text Align</Text>
         </Pressable>
-        <Pressable style={styles.Tools}>
+        <Pressable style={styles.Tools} onPress={onPaddingChange}>
           <Icon name="code-working-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Padding</Text>
         </Pressable>
