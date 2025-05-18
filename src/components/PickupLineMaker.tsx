@@ -160,7 +160,7 @@ const PickupLineMaker = ({
         <Text style={styles.title}>Pickup Line Maker</Text>
       </View>
       <ViewShot ref={viewShotRef}>
-        <View style={[styles.PostCard, {backgroundColor:bgColor}]}>
+        <View style={[styles.PostCard, {backgroundColor: bgColor}]}>
           <View>
             <Text
               style={[
@@ -289,11 +289,17 @@ const styles = StyleSheet.create({
   WatermarkText: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_12,
+    textShadowColor: '#eee',
+    textShadowRadius: 1,
+    textShadowOffset: {width: 1, height: 1},
   },
   Copyright: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_10,
     color: '#777',
+    textShadowColor: '#eee',
+    textShadowRadius: 1,
+    textShadowOffset: {width: 1, height: 1},
   },
   ColorPickerContainer: {
     height: '20%',
