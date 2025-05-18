@@ -294,17 +294,17 @@ const styles = StyleSheet.create({
   WatermarkText: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_12,
-    textShadowColor: '#eee',
+    textShadowColor: '#bbb',
     textShadowRadius: 1,
-    textShadowOffset: {width: 1, height: 1},
+    textShadowOffset: {width: -1, height: 1},
   },
   Copyright: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_10,
     color: '#777',
-    textShadowColor: '#eee',
+    textShadowColor: '#bbb',
     textShadowRadius: 1,
-    textShadowOffset: {width: 1, height: 1},
+    textShadowOffset: {width: -1, height: 1},
   },
   ColorPickerContainer: {
     height: '20%',
