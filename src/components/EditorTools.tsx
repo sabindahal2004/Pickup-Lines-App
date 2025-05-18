@@ -6,17 +6,19 @@ import {FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 const EditorTools = ({
   onShare,
   onSave,
-  onBgChange,
   onTextAlign,
   onTextShadowChange,
   onTextStyleChange,
+  onTextColorChange,
+  // onBgColorChange,
 }: {
   onShare: () => void;
   onSave: () => void;
-  onBgChange: () => void;
   onTextAlign: () => void;
   onTextShadowChange: () => void;
   onTextStyleChange: () => void;
+  onTextColorChange: () => void;
+  // onBgColorChange: () => void;
 }) => {
   return (
     <View style={styles.ToolsContainer}>
@@ -29,7 +31,7 @@ const EditorTools = ({
           <Icon name="expand-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Text Size</Text>
         </Pressable>
-        <Pressable style={styles.Tools}>
+        <Pressable style={styles.Tools} onPress={onTextColorChange}>
           <Icon name="color-palette-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Text Color</Text>
         </Pressable>
@@ -63,7 +65,7 @@ const EditorTools = ({
           <Icon name="aperture-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Gradient</Text>
         </Pressable>
-        <Pressable style={styles.Tools} onPress={onBgChange}>
+        <Pressable style={styles.Tools} onPress={()=>{}}>
           <Icon name="color-fill-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>BG Color</Text>
         </Pressable>
