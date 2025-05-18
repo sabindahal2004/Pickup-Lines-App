@@ -27,7 +27,8 @@ const PostCard = ({item, navigation}: {item: Post; navigation: any}) => {
   };
 
   const viewShotRef = useRef<ViewShot>(null);
-
+  //Save
+  const [isSaved, setIsSaved] = useState(false);
   const handleSave = async () => {
     try {
       // Prevent permission request if app is not active
@@ -78,6 +79,7 @@ const PostCard = ({item, navigation}: {item: Post; navigation: any}) => {
       });
     } finally {
       console.log('Save attempt finished.');
+      setIsSaved(true);
     }
   };
 
@@ -104,7 +106,7 @@ const PostCard = ({item, navigation}: {item: Post; navigation: any}) => {
   };
 
   const handleEdit = () => {
-    navigation.navigate('LineMaker',{pickupLine:item.pickup_line});
+    navigation.navigate('LineMaker', {pickupLine: item.pickup_line});
   };
 
   return (
@@ -126,7 +128,7 @@ const PostCard = ({item, navigation}: {item: Post; navigation: any}) => {
         <TouchableOpacity style={styles.EditIconContainer} onPress={handleEdit}>
           <Icon name="brush-outline" size={FONTSIZE.size_20} />
         </TouchableOpacity>
-        <PostCardFooter post={item} onSave={handleSave} onShare={handleShare} />
+        <PostCardFooter post={item} onSave={handleSave} onShare={handleShare} isSaved={isSaved} />
       </View>
     </View>
   );

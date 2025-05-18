@@ -11,10 +11,12 @@ const PostCardFooter = ({
   post,
   onSave,
   onShare,
+  isSaved,
 }: {
   post: Post;
   onSave: () => void;
   onShare: () => void;
+  isSaved: boolean;
 }) => {
   const [liked, setLiked] = useState(false);
   const {likedPosts, addLikedPost, removeLikedPost} = useLikedPostsStore();
@@ -64,7 +66,10 @@ const PostCardFooter = ({
 
       <View style={styles.FooterIconContainer}>
         <TouchableOpacity onPress={onSave}>
-          <Icon name="save-outline" size={FONTSIZE.size_20} />
+          <Icon
+            name={isSaved ? 'checkmark-outline' : 'save-outline'}
+            size={FONTSIZE.size_20}
+          />
         </TouchableOpacity>
         <Text style={styles.FooterLabel}>Save</Text>
       </View>
