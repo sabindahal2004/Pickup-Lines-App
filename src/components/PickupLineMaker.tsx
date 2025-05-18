@@ -113,6 +113,11 @@ const PickupLineMaker = ({
       textShadowOffset: {width: 1, height: 2},
       textShadowRadius: 4,
     },
+    {
+      textShadowColor: '#888',
+      textShadowOffset: {width: 1, height: 1},
+      textShadowRadius: 4,
+    },
   ];
 
   const [shadowIndex, setShadowIndex] = useState(0);
@@ -309,6 +314,8 @@ const styles = StyleSheet.create({
   ColorPickerDoneText: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_14,
+    color:'purple',
+    textTransform:'uppercase',
   },
   DoneContainer: {
     flexDirection: 'row',
@@ -319,5 +326,6 @@ const styles = StyleSheet.create({
   },
   CheckmarkIcon: {
     fontFamily: FONTFAMILY.poppins_semibold,
+    color:'purple',
   },
 });
