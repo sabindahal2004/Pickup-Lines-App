@@ -11,6 +11,7 @@ const EditorTools = ({
   onTextStyleChange,
   onTextColorChange,
   onBgColorChange,
+  onFontSizeChange,
 }: {
   onShare: () => void;
   onSave: () => void;
@@ -19,6 +20,7 @@ const EditorTools = ({
   onTextStyleChange: () => void;
   onTextColorChange: () => void;
   onBgColorChange: () => void;
+  onFontSizeChange: () => void;
 }) => {
   return (
     <View style={styles.ToolsContainer}>
@@ -27,7 +29,7 @@ const EditorTools = ({
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.ScrollContainer}>
-        <Pressable style={styles.Tools}>
+        <Pressable style={styles.Tools} onPress={onFontSizeChange}>
           <Icon name="expand-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Text Size</Text>
         </Pressable>

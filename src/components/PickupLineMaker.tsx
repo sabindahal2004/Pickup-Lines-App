@@ -9,6 +9,7 @@ import Toast from 'react-native-toast-message';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import WheelColorPicker from 'react-native-wheel-color-picker';
+import Slider from '@react-native-community/slider';
 
 const PickupLineMaker = ({
   navigation,
@@ -156,6 +157,15 @@ const PickupLineMaker = ({
   const handleBgColor = () => {
     setShowBgColorPicker(true);
   };
+
+  // Font Size Slider
+  const [fontSizeRange, setFontSizeRange] = useState(24);
+  const [showFontSlider, setShowFontSlider] = useState(false);
+
+  const handleFontSize = () => {
+    setShowFontSlider(true);
+  };
+
   return (
     <View style={styles.PostEditorContainer}>
       <View style={styles.header}>
@@ -174,6 +184,7 @@ const PickupLineMaker = ({
                 textShadowStyle,
                 currentFontStyle,
                 {color: textColor},
+                {fontSize: fontSizeRange},
               ]}>
               {pickupLine}
             </Text>
@@ -236,6 +247,28 @@ const PickupLineMaker = ({
           </TouchableOpacity>
         </View>
       )}
+
+      {/* Font Size Slider */}
+      {showFontSlider && (
+        <View style={styles.TextSizeSlider}>
+          <Text style={styles.TextSizeTitle}>Text Size</Text>
+          <Slider
+            style={{width: '100%', height: '40%'}}
+            onValueChange={setFontSizeRange}
+            minimumValue={18}
+            maximumValue={100}
+            step={1}
+            minimumTrackTintColor="purple"
+            thumbTintColor="purple"
+            value={fontSizeRange}
+          />
+          <TouchableOpacity
+            style={styles.DoneBtn}
+            onPress={() => setShowFontSlider(false)}>
+            <Text style={styles.DoneBtnText}>done</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       <EditorTools
         onShare={handleShare}
         onSave={handleSave}
@@ -244,6 +277,7 @@ const PickupLineMaker = ({
         onTextStyleChange={handleFontStyleChange}
         onTextColorChange={handleTextColor}
         onBgColorChange={handleBgColor}
+        onFontSizeChange={handleFontSize}
       />
     </View>
   );
@@ -265,7 +299,6 @@ const styles = StyleSheet.create({
   },
   PickupLine: {
     fontFamily: FONTFAMILY.poppins_semibold,
-    fontSize: FONTSIZE.size_24,
   },
   header: {
     flexDirection: 'row',
@@ -314,8 +347,8 @@ const styles = StyleSheet.create({
   ColorPickerDoneText: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_14,
-    color:'purple',
-    textTransform:'uppercase',
+    color: 'purple',
+    textTransform: 'uppercase',
   },
   DoneContainer: {
     flexDirection: 'row',
@@ -326,6 +359,29 @@ const styles = StyleSheet.create({
   },
   CheckmarkIcon: {
     fontFamily: FONTFAMILY.poppins_semibold,
-    color:'purple',
+    color: 'purple',
+  },
+  TextSizeSlider: {
+    height: '20%',
+    width: '100%',
+    paddingHorizontal: SPACING.space_8,
+    marginTop: '45%',
+    paddingBottom: '10%',
+  },
+  DoneBtn: {
+    backgroundColor: 'purple',
+  },
+  DoneBtnText: {
+    color: '#fff',
+    textTransform: 'uppercase',
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_20,
+    textAlign: 'center',
+    paddingVertical: SPACING.space_8,
+  },
+  TextSizeTitle: {
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_16,
+    textAlign: 'center',
   },
 });
