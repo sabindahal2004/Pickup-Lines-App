@@ -441,6 +441,7 @@ const styles = StyleSheet.create({
     paddingLeft: SPACING.space_10,
     gap: 2,
     backgroundColor: 'purple',
+    elevation:2,
   },
   CheckmarkIcon: {
     fontFamily: FONTFAMILY.poppins_semibold,
@@ -454,7 +455,7 @@ const styles = StyleSheet.create({
   },
   DoneBtn: {
     backgroundColor: 'purple',
-    // elevation:2,
+    elevation:2,
   },
   DoneBtnText: {
     color: '#fff',
