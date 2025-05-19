@@ -15,6 +15,7 @@ const EditorTools = ({
   onPaddingChange,
   onTextTransform,
   onBgOpacityChange,
+  onGradientColorChange,
 }: {
   onShare: () => void;
   onSave: () => void;
@@ -27,6 +28,7 @@ const EditorTools = ({
   onPaddingChange: () => void;
   onTextTransform: () => void;
   onBgOpacityChange: () => void;
+  onGradientColorChange: () => void;
 }) => {
   return (
     <View style={styles.ToolsContainer}>
@@ -69,7 +71,7 @@ const EditorTools = ({
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.ScrollContainer}>
-        <Pressable style={styles.Tools}>
+        <Pressable style={styles.Tools} onPress={onGradientColorChange}>
           <Icon name="aperture-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Gradient</Text>
         </Pressable>

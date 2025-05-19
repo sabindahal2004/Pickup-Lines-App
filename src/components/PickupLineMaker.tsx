@@ -18,6 +18,7 @@ import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import WheelColorPicker from 'react-native-wheel-color-picker';
 import Slider from '@react-native-community/slider';
+import LinearGradient from 'react-native-linear-gradient';
 
 const PickupLineMaker = ({
   navigation,
@@ -213,6 +214,18 @@ const PickupLineMaker = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editableText, setEditableText] = useState(pickupLine);
 
+  // Gradient Color Picker
+  const [showGradientPicker, setShowGradientPicker] = useState(false);
+  const [startGradientColor, setStartGradientColor] = useState('#ddd');
+  const [endGradientColor, setEndGradientColor] = useState('#ddd');
+  const [showGradientFirstPicker, setShowGradientFirstPicker] = useState(false);
+  const [showGradientSecondPicker, setShowGradientSecondPicker] =
+    useState(false);
+
+  const handleGradientPicker = () => {
+    setShowGradientPicker(true);
+  };
+
   return (
     <View style={styles.PostEditorContainer}>
       <View style={styles.header}>
@@ -222,16 +235,16 @@ const PickupLineMaker = ({
         <Text style={styles.title}>Pickup Line Maker</Text>
       </View>
       <ViewShot ref={viewShotRef}>
+        {/* Ya chai logical rendering garna lageko theye ;; showGradientPicker ? <LinearGrdient> : <View> */}
         <View
           style={[
             styles.PostCard,
             {backgroundColor: bgColor, opacity: bgOpacity},
           ]}>
-          <Pressable
-            onPress={() => setIsEditing(true)}>
+          <Pressable onPress={() => setIsEditing(true)}>
             {isEditing ? (
               <TextInput
-              selectionColor={'purple'}
+                selectionColor={'purple'}
                 style={[
                   styles.PickupLine,
                   {
@@ -440,6 +453,91 @@ const PickupLineMaker = ({
         </View>
       )}
 
+      {/* Gradient Color Picker */}
+      {showGradientPicker && (
+        <View style={styles.GradientColorPickerContainer}>
+          <Text style={styles.PaddingTextTitle}>Gradient</Text>
+          <View style={styles.GradientBtnContainer}>
+            <Pressable
+              style={styles.FirstColorBtn}
+              onPress={() => {
+                setShowGradientFirstPicker(true);
+                setShowGradientPicker(false);
+              }}>
+              <Text style={styles.BtnText}>First Color</Text>
+            </Pressable>
+
+            <Pressable
+              style={styles.SecondColorBtn}
+              onPress={() => {
+                setShowGradientSecondPicker(true);
+                setShowGradientPicker(false);
+              }}>
+              <Text style={styles.BtnText}>Second Color</Text>
+            </Pressable>
+          </View>
+          <TouchableOpacity
+            style={styles.DoneBtn}
+            onPress={() => setShowGradientPicker(false)}>
+            <Text style={styles.DoneBtnText}>done</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {/* First Gradient Color */}
+      {showGradientFirstPicker && (
+        <View style={styles.ColorPickerContainer}>
+          <WheelColorPicker
+            color={bgColor}
+            onColorChange={setStartGradientColor}
+            onColorChangeComplete={setStartGradientColor}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              setShowGradientFirstPicker(false);
+              setShowGradientPicker(true);
+              setStartGradientColor(startGradientColor);
+            }}>
+            <View style={styles.DoneContainer}>
+              <Text style={styles.ColorPickerDoneText}>Done</Text>
+              <Icon
+                name="checkmark-done-outline"
+                size={18}
+                color={'#000'}
+                style={styles.CheckmarkIcon}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {/* Second Gradient COlor */}
+      {showGradientSecondPicker && (
+        <View style={styles.ColorPickerContainer}>
+          <WheelColorPicker
+            color={bgColor}
+            onColorChange={setEndGradientColor}
+            onColorChangeComplete={setEndGradientColor}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              setShowGradientSecondPicker(false);
+              setShowGradientPicker(true);
+              setEndGradientColor(endGradientColor);
+            }}>
+            <View style={styles.DoneContainer}>
+              <Text style={styles.ColorPickerDoneText}>Done</Text>
+              <Icon
+                name="checkmark-done-outline"
+                size={18}
+                color={'#000'}
+                style={styles.CheckmarkIcon}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+      )}
+
       <EditorTools
         onShare={handleShare}
         onSave={handleSave}
@@ -452,6 +550,7 @@ const PickupLineMaker = ({
         onPaddingChange={handleTextPadding}
         onTextTransform={handleTextTransform}
         onBgOpacityChange={handleBgOpactiy}
+        onGradientColorChange={handleGradientPicker}
       />
     </View>
   );
@@ -590,5 +689,34 @@ const styles = StyleSheet.create({
   OpacitySlider: {
     width: '100%',
     height: '40%',
+  },
+  GradientBtnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingVertical: 20,
+  },
+  FirstColorBtn: {
+    backgroundColor: 'purple',
+    paddingVertical: SPACING.space_16,
+    paddingHorizontal: SPACING.space_28,
+    elevation: 3,
+  },
+  SecondColorBtn: {
+    backgroundColor: 'purple',
+    paddingVertical: SPACING.space_16,
+    paddingHorizontal: SPACING.space_18,
+    elevation: 3,
+  },
+  BtnText: {
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_16,
+    color: '#fff',
+  },
+  GradientColorPickerContainer: {
+    height: '20%',
+    width: '100%',
+    paddingHorizontal: SPACING.space_8,
+    marginTop: '40%',
   },
 });
