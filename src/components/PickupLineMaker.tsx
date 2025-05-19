@@ -178,6 +178,20 @@ const PickupLineMaker = ({
     setShowPaddingSlider(true);
   };
 
+  // Text Transform
+  const TextTransform = [
+    'none',
+    'uppercase',
+    'lowercase',
+    'capitalize',
+  ] as const;
+  const [textTransformIndex, setTextTransformIndex] = useState(0);
+
+  const handleTextTransform = () => {
+    setTextTransformIndex(
+      previousIndex => (previousIndex + 1) % TextTransform.length,
+    );
+  };
   return (
     <View style={styles.PostEditorContainer}>
       <View style={styles.header}>
@@ -202,6 +216,7 @@ const PickupLineMaker = ({
                   paddingRight: rightPadding,
                   paddingTop: topPadding,
                   paddingBottom: bottomPadding,
+                  textTransform: TextTransform[textTransformIndex],
                 },
               ]}>
               {pickupLine}
@@ -361,6 +376,7 @@ const PickupLineMaker = ({
         onBgColorChange={handleBgColor}
         onFontSizeChange={handleFontSize}
         onPaddingChange={handleTextPadding}
+        onTextTransform={handleTextTransform}
       />
     </View>
   );
@@ -441,7 +457,7 @@ const styles = StyleSheet.create({
     paddingLeft: SPACING.space_10,
     gap: 2,
     backgroundColor: 'purple',
-    elevation:2,
+    elevation: 2,
   },
   CheckmarkIcon: {
     fontFamily: FONTFAMILY.poppins_semibold,
@@ -455,7 +471,7 @@ const styles = StyleSheet.create({
   },
   DoneBtn: {
     backgroundColor: 'purple',
-    elevation:2,
+    elevation: 2,
   },
   DoneBtnText: {
     color: '#fff',
