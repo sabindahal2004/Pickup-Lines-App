@@ -235,8 +235,8 @@ const PickupLineMaker = ({
         <Text style={styles.title}>Pickup Line Maker</Text>
       </View>
       <ViewShot ref={viewShotRef}>
-        {/* Ya chai logical rendering garna lageko theye ;; showGradientPicker ? <LinearGrdient> : <View> */}
-        <View
+        <LinearGradient
+          colors={[startGradientColor, endGradientColor]}
           style={[
             styles.PostCard,
             {backgroundColor: bgColor, opacity: bgOpacity},
@@ -292,7 +292,7 @@ const PickupLineMaker = ({
             <Text style={styles.Copyright}>&copy;</Text>
             <Text style={styles.WatermarkText}>Pickup Lines</Text>
           </View>
-        </View>
+        </LinearGradient>
       </ViewShot>
 
       {/* Text Color Picker */}
