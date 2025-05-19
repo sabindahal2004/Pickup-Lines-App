@@ -14,6 +14,7 @@ const EditorTools = ({
   onFontSizeChange,
   onPaddingChange,
   onTextTransform,
+  onBgOpacityChange,
 }: {
   onShare: () => void;
   onSave: () => void;
@@ -25,6 +26,7 @@ const EditorTools = ({
   onFontSizeChange: () => void;
   onPaddingChange: () => void;
   onTextTransform: () => void;
+  onBgOpacityChange: () => void;
 }) => {
   return (
     <View style={styles.ToolsContainer}>
@@ -43,11 +45,11 @@ const EditorTools = ({
         </Pressable>
         <Pressable style={styles.Tools} onPress={onTextTransform}>
           <Icon name="text-outline" size={SPACING.space_36} />
-          <Text style={styles.ToolText}>Text Transform</Text>
+          <Text style={styles.ToolText}>Transform</Text>
         </Pressable>
         <Pressable style={styles.Tools} onPress={onTextAlign}>
           <Icon name="stats-chart-outline" size={SPACING.space_36} />
-          <Text style={styles.ToolText}>Text Align</Text>
+          <Text style={styles.ToolText}>Align</Text>
         </Pressable>
         <Pressable style={styles.Tools} onPress={onPaddingChange}>
           <Icon name="code-working-outline" size={SPACING.space_36} />
@@ -79,7 +81,7 @@ const EditorTools = ({
           <Icon name="image-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Image</Text>
         </Pressable>
-        <Pressable style={styles.Tools}>
+        <Pressable style={styles.Tools} onPress={onBgOpacityChange}>
           <Icon name="contrast-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Opacity</Text>
         </Pressable>

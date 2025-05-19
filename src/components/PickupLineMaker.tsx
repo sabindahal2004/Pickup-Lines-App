@@ -1,4 +1,12 @@
-import {StyleSheet, Text, View, TouchableOpacity, Platform} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Platform,
+  Pressable,
+  TextInput,
+} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {SPACING, FONTFAMILY, FONTSIZE} from '../theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -192,6 +200,19 @@ const PickupLineMaker = ({
       previousIndex => (previousIndex + 1) % TextTransform.length,
     );
   };
+
+  // Background Opacity Slider
+  const [bgOpacity, setBgOpacity] = useState(1);
+  const [showOpacitySlider, setShowOpacitySlider] = useState(false);
+
+  const handleBgOpactiy = () => {
+    setShowOpacitySlider(true);
+  };
+
+  // Editable Content
+  const [isEditing, setIsEditing] = useState(false);
+  const [editableText, setEditableText] = useState(pickupLine);
+
   return (
     <View style={styles.PostEditorContainer}>
       <View style={styles.header}>
@@ -201,27 +222,59 @@ const PickupLineMaker = ({
         <Text style={styles.title}>Pickup Line Maker</Text>
       </View>
       <ViewShot ref={viewShotRef}>
-        <View style={[styles.PostCard, {backgroundColor: bgColor}]}>
-          <View>
-            <Text
-              style={[
-                styles.PickupLine,
-                {textAlign: AlignProperties[textAlignIndex]},
-                textShadowStyle,
-                currentFontStyle,
-                {color: textColor},
-                {fontSize: fontSizeRange},
-                {
-                  paddingLeft: leftPadding,
-                  paddingRight: rightPadding,
-                  paddingTop: topPadding,
-                  paddingBottom: bottomPadding,
-                  textTransform: TextTransform[textTransformIndex],
-                },
-              ]}>
-              {pickupLine}
-            </Text>
-          </View>
+        <View
+          style={[
+            styles.PostCard,
+            {backgroundColor: bgColor, opacity: bgOpacity},
+          ]}>
+          <Pressable
+            onPress={() => setIsEditing(true)}>
+            {isEditing ? (
+              <TextInput
+              selectionColor={'purple'}
+                style={[
+                  styles.PickupLine,
+                  {
+                    textAlign: AlignProperties[textAlignIndex],
+                    color: textColor,
+                    fontSize: fontSizeRange,
+                    paddingLeft: leftPadding,
+                    paddingRight: rightPadding,
+                    paddingTop: topPadding,
+                    paddingBottom: bottomPadding,
+                    textTransform: TextTransform[textTransformIndex],
+                  },
+                  textShadowStyle,
+                  currentFontStyle,
+                ]}
+                value={editableText}
+                onChangeText={setEditableText}
+                multiline
+                autoFocus
+                onBlur={() => setIsEditing(false)}
+              />
+            ) : (
+              <Text
+                style={[
+                  styles.PickupLine,
+                  {
+                    textAlign: AlignProperties[textAlignIndex],
+                    color: textColor,
+                    fontSize: fontSizeRange,
+                    paddingLeft: leftPadding,
+                    paddingRight: rightPadding,
+                    paddingTop: topPadding,
+                    paddingBottom: bottomPadding,
+                    textTransform: TextTransform[textTransformIndex],
+                  },
+                  textShadowStyle,
+                  currentFontStyle,
+                ]}>
+                {editableText}
+              </Text>
+            )}
+          </Pressable>
+
           <View style={styles.Watermark}>
             <Text style={styles.Copyright}>&copy;</Text>
             <Text style={styles.WatermarkText}>Pickup Lines</Text>
@@ -366,6 +419,27 @@ const PickupLineMaker = ({
         </View>
       )}
 
+      {/* Bg Opacity Slider */}
+      {showOpacitySlider && (
+        <View style={styles.OpacitySliderContainer}>
+          <Text style={styles.TextSizeTitle}>Image Opacity</Text>
+          <Slider
+            style={styles.OpacitySlider}
+            onValueChange={setBgOpacity}
+            minimumValue={0.1}
+            maximumValue={1}
+            thumbTintColor="purple"
+            value={bgOpacity}
+            minimumTrackTintColor="purple"
+          />
+          <TouchableOpacity
+            style={styles.DoneBtn}
+            onPress={() => setShowOpacitySlider(false)}>
+            <Text style={styles.DoneBtnText}>done</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
       <EditorTools
         onShare={handleShare}
         onSave={handleSave}
@@ -377,6 +451,7 @@ const PickupLineMaker = ({
         onFontSizeChange={handleFontSize}
         onPaddingChange={handleTextPadding}
         onTextTransform={handleTextTransform}
+        onBgOpacityChange={handleBgOpactiy}
       />
     </View>
   );
@@ -505,5 +580,15 @@ const styles = StyleSheet.create({
   },
   HorizontalPadding: {
     flexDirection: 'row',
+  },
+  OpacitySliderContainer: {
+    height: '20%',
+    width: '100%',
+    paddingHorizontal: SPACING.space_8,
+    marginTop: '43%',
+  },
+  OpacitySlider: {
+    width: '100%',
+    height: '40%',
   },
 });
