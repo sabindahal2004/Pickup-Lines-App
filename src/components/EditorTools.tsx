@@ -16,6 +16,7 @@ const EditorTools = ({
   onTextTransform,
   onBgOpacityChange,
   onGradientColorChange,
+  onChooseBgImage,
 }: {
   onShare: () => void;
   onSave: () => void;
@@ -29,6 +30,7 @@ const EditorTools = ({
   onTextTransform: () => void;
   onBgOpacityChange: () => void;
   onGradientColorChange: () => void;
+  onChooseBgImage: () => void;
 }) => {
   return (
     <View style={styles.ToolsContainer}>
@@ -79,7 +81,7 @@ const EditorTools = ({
           <Icon name="color-fill-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>BG Color</Text>
         </Pressable>
-        <Pressable style={styles.Tools}>
+        <Pressable style={styles.Tools} onPress={onChooseBgImage}>
           <Icon name="image-outline" size={SPACING.space_36} />
           <Text style={styles.ToolText}>Image</Text>
         </Pressable>

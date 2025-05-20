@@ -6,6 +6,7 @@ import {
   Platform,
   Pressable,
   TextInput,
+  ImageBackground,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import {SPACING, FONTFAMILY, FONTSIZE} from '../theme/theme';
@@ -19,6 +20,7 @@ import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import WheelColorPicker from 'react-native-wheel-color-picker';
 import Slider from '@react-native-community/slider';
 import LinearGradient from 'react-native-linear-gradient';
+import ImagePicker from 'react-native-image-crop-picker';
 
 const PickupLineMaker = ({
   navigation,
@@ -224,8 +226,21 @@ const PickupLineMaker = ({
 
   const handleGradientPicker = () => {
     setShowGradientPicker(true);
+    setBgImageUri(null);
   };
 
+  // Image Picker
+  const [bgImageUri, setBgImageUri] = useState<string | null>(null);
+  const chooseBgImage = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      console.log(image);
+      setBgImageUri(image.path);
+    });
+  };
   return (
     <View style={styles.PostEditorContainer}>
       <View style={styles.header}>
@@ -235,64 +250,120 @@ const PickupLineMaker = ({
         <Text style={styles.title}>Pickup Line Maker</Text>
       </View>
       <ViewShot ref={viewShotRef}>
-        <LinearGradient
-          colors={[startGradientColor, endGradientColor]}
-          style={[
-            styles.PostCard,
-            {backgroundColor: bgColor, opacity: bgOpacity},
-          ]}>
-          <Pressable onPress={() => setIsEditing(true)}>
-            {isEditing ? (
-              <TextInput
-                selectionColor={'purple'}
-                style={[
-                  styles.PickupLine,
-                  {
-                    textAlign: AlignProperties[textAlignIndex],
-                    color: textColor,
-                    fontSize: fontSizeRange,
-                    paddingLeft: leftPadding,
-                    paddingRight: rightPadding,
-                    paddingTop: topPadding,
-                    paddingBottom: bottomPadding,
-                    textTransform: TextTransform[textTransformIndex],
-                  },
-                  textShadowStyle,
-                  currentFontStyle,
-                ]}
-                value={editableText}
-                onChangeText={setEditableText}
-                multiline
-                autoFocus
-                onBlur={() => setIsEditing(false)}
-              />
-            ) : (
-              <Text
-                style={[
-                  styles.PickupLine,
-                  {
-                    textAlign: AlignProperties[textAlignIndex],
-                    color: textColor,
-                    fontSize: fontSizeRange,
-                    paddingLeft: leftPadding,
-                    paddingRight: rightPadding,
-                    paddingTop: topPadding,
-                    paddingBottom: bottomPadding,
-                    textTransform: TextTransform[textTransformIndex],
-                  },
-                  textShadowStyle,
-                  currentFontStyle,
-                ]}>
-                {editableText}
-              </Text>
-            )}
-          </Pressable>
+        {bgImageUri ? (
+          <ImageBackground
+            style={styles.PostCard}
+            resizeMode="cover"
+            source={bgImageUri ? {uri: bgImageUri} : undefined}>
+            <Pressable onPress={() => setIsEditing(true)}>
+              {isEditing ? (
+                <TextInput
+                  selectionColor={'purple'}
+                  style={[
+                    styles.PickupLine,
+                    {
+                      textAlign: AlignProperties[textAlignIndex],
+                      color: textColor,
+                      fontSize: fontSizeRange,
+                      paddingLeft: leftPadding,
+                      paddingRight: rightPadding,
+                      paddingTop: topPadding,
+                      paddingBottom: bottomPadding,
+                      textTransform: TextTransform[textTransformIndex],
+                    },
+                    textShadowStyle,
+                    currentFontStyle,
+                  ]}
+                  value={editableText}
+                  onChangeText={setEditableText}
+                  multiline
+                  autoFocus
+                  onBlur={() => setIsEditing(false)}
+                />
+              ) : (
+                <Text
+                  style={[
+                    styles.PickupLine,
+                    {
+                      textAlign: AlignProperties[textAlignIndex],
+                      color: textColor,
+                      fontSize: fontSizeRange,
+                      paddingLeft: leftPadding,
+                      paddingRight: rightPadding,
+                      paddingTop: topPadding,
+                      paddingBottom: bottomPadding,
+                      textTransform: TextTransform[textTransformIndex],
+                    },
+                    textShadowStyle,
+                    currentFontStyle,
+                  ]}>
+                  {editableText}
+                </Text>
+              )}
+            </Pressable>
 
-          <View style={styles.Watermark}>
-            <Text style={styles.Copyright}>&copy;</Text>
-            <Text style={styles.WatermarkText}>Pickup Lines</Text>
-          </View>
-        </LinearGradient>
+            <View style={styles.Watermark}>
+              <Text style={styles.Copyright}>&copy;</Text>
+              <Text style={styles.WatermarkText}>Pickup Lines</Text>
+            </View>
+          </ImageBackground>
+        ) : (
+          <LinearGradient
+            colors={[startGradientColor, endGradientColor]}
+            style={[styles.PostCard]}>
+            <Pressable onPress={() => setIsEditing(true)}>
+              {isEditing ? (
+                <TextInput
+                  selectionColor={'purple'}
+                  style={[
+                    styles.PickupLine,
+                    {
+                      textAlign: AlignProperties[textAlignIndex],
+                      color: textColor,
+                      fontSize: fontSizeRange,
+                      paddingLeft: leftPadding,
+                      paddingRight: rightPadding,
+                      paddingTop: topPadding,
+                      paddingBottom: bottomPadding,
+                      textTransform: TextTransform[textTransformIndex],
+                    },
+                    textShadowStyle,
+                    currentFontStyle,
+                  ]}
+                  value={editableText}
+                  onChangeText={setEditableText}
+                  multiline
+                  autoFocus
+                  onBlur={() => setIsEditing(false)}
+                />
+              ) : (
+                <Text
+                  style={[
+                    styles.PickupLine,
+                    {
+                      textAlign: AlignProperties[textAlignIndex],
+                      color: textColor,
+                      fontSize: fontSizeRange,
+                      paddingLeft: leftPadding,
+                      paddingRight: rightPadding,
+                      paddingTop: topPadding,
+                      paddingBottom: bottomPadding,
+                      textTransform: TextTransform[textTransformIndex],
+                    },
+                    textShadowStyle,
+                    currentFontStyle,
+                  ]}>
+                  {editableText}
+                </Text>
+              )}
+            </Pressable>
+
+            <View style={styles.Watermark}>
+              <Text style={styles.Copyright}>&copy;</Text>
+              <Text style={styles.WatermarkText}>Pickup Lines</Text>
+            </View>
+          </LinearGradient>
+        )}
       </ViewShot>
 
       {/* Text Color Picker */}
@@ -551,6 +622,7 @@ const PickupLineMaker = ({
         onTextTransform={handleTextTransform}
         onBgOpacityChange={handleBgOpactiy}
         onGradientColorChange={handleGradientPicker}
+        onChooseBgImage={chooseBgImage}
       />
     </View>
   );
